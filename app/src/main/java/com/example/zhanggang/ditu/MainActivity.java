@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView textView;
 
+
     public LocationClient mLocationClient = null;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
