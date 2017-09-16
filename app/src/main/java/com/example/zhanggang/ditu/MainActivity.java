@@ -7,18 +7,52 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.location.LocationClientOption;
+import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.map.BaiduMap;
+import com.baidu.mapapi.map.BitmapDescriptor;
+import com.baidu.mapapi.map.BitmapDescriptorFactory;
+import com.baidu.mapapi.map.MapView;
+import com.baidu.mapapi.map.Marker;
+import com.baidu.mapapi.map.MarkerOptions;
+import com.baidu.mapapi.map.OverlayOptions;
+import com.baidu.mapapi.model.LatLng;
 
 
 public class MainActivity extends AppCompatActivity {
 
     TextView textView;
-
+    MapView mMapView = null;
 
     public LocationClient mLocationClient = null;
+    private BaiduMap map;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        SDKInitializer.initialize(getApplicationContext());
         setContentView(R.layout.activity_main);
+
+        //地图
+        mMapView = (MapView) findViewById(R.id.bmapView);
+        map = mMapView.getMap();
+        //普通地图
+        map.setMapType(BaiduMap.MAP_TYPE_NORMAL);
+
+//        //定义Maker坐标点
+//        LatLng point = new LatLng(39.963175, 116.400244);
+//        //构建Marker图标
+//        BitmapDescriptor bitmap = BitmapDescriptorFactory
+//                .fromResource(R.mipmap.ic_launcher);
+//        //构建MarkerOption，用于在地图上添加Marker
+//        OverlayOptions option = new MarkerOptions()
+//                .position(point)
+//                .icon(bitmap);
+//        //在地图上添加Marker，并显示
+//        map.addOverlay(option);
+
+
+
+
         textView= (TextView) findViewById(R.id.textview);
 
         mLocationClient = new LocationClient(getApplicationContext());
@@ -88,5 +122,22 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mMapView.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        mMapView.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        mMapView.onPause();
+    }
 }
 
